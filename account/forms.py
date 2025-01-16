@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class" : "form-control"}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class" : "form-control"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"class" : "form-control" }))
+    password = forms.CharField(label="Password",widget=forms.PasswordInput(attrs={"class" : "form-control" }))
+    confirm_password = forms.CharField(label="Confirm Password",widget=forms.PasswordInput(attrs={"class" : "form-control" }))
     
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -18,4 +19,11 @@ class UserRegistrationForm(forms.Form):
         if user :
             raise ValidationError("This User is already exists")
         return username
+    
+    def clean(self):
+        cd = super().clean()
+        p1 = cd.get("password")
+        p2 = cd.get("confirm_password")
+        if p1 and p2 and p1 != p2 :
+            raise ValidationError("The password must be match")
     
