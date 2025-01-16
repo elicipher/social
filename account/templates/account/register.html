@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-{% block user %}
+{% block user-register %}
     <h4>Register</h4>
     <form action="" method="post" class= "col-md-3" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Register">
     </form>
+    <br>
+    <p>Do you have account ? <a href="{% url 'account:user_login'%}">login</a></p>
+    
 {% endblock %}
