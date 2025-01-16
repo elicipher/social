@@ -6,11 +6,12 @@ from django.contrib import messages
 
 # Create your views here.
 class RegisterView(View):
-    form_class = UserRegistrationForm()
+
+    form_class = UserRegistrationForm
     template_name = "account/register.html"
-    
+
     def get(self , request):
-        form = self.form_class
+        form = self.form_class()
         return render(request , self.template_name , {"form" : form})
     
     def post(self , request):
@@ -21,3 +22,4 @@ class RegisterView(View):
             messages.success(request , "You reqistered successfully " , "success")
             return redirect('home:home')
         return render(request ,self.template_name , {"form" : form})
+    
