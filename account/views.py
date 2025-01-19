@@ -3,7 +3,7 @@ from django.views import View
 from .forms import UserRegistrationForm , UserLoginForm
 from django.contrib.auth.models import User 
 from django.contrib import messages
-from django.contrib.auth import authenticate , login
+from django.contrib.auth import authenticate , login , logout
 # Create your views here.
 class RegisterView(View):
 
@@ -37,10 +37,16 @@ class LoginView(View):
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request , username = cd["username"] , password = cd["password"])
-            if user is None :
+            if user is not None :
                 login(request , user)
                 messages.success(request , "You reqistered successfully " , "success")
                 return redirect('home:home')
             messages.error(request , "Your password or username is wrong !", 'danger' )
             return render(request ,self.template_name , {"form":form})
-            
+
+class LogoutView(View):
+    def get(self,request):
+        logout(request)
+        messages.success(request , "You logout successfuly " , "success")
+        return redirect('home:home')
+
