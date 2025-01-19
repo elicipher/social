@@ -4,8 +4,15 @@ from .forms import UserRegistrationForm , UserLoginForm
 from django.contrib.auth.models import User 
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 class RegisterView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if  request.user.is_authenticated :
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+    
 
     form_class = UserRegistrationForm
     template_name = "account/register.html"
@@ -24,6 +31,11 @@ class RegisterView(View):
         return render(request ,self.template_name , {"form" : form})
     
 class LoginView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if  request.user.is_authenticated :
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
 
     form_class = UserLoginForm
     template_name = "account/login.html"
@@ -44,7 +56,8 @@ class LoginView(View):
             messages.error(request , "Your password or username is wrong !", 'danger' )
             return render(request ,self.template_name , {"form":form})
 
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin ,View):
+
     def get(self,request):
         logout(request)
         messages.success(request , "You logout successfuly " , "success")
