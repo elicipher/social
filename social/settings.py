@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'account.apps.AccountConfig',
+    'post.apps.PostConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +128,7 @@ LOGIN_URL = '/account/login'
 AUTHENTICATION_BACKENDS =[
 
     "django.contrib.auth.backends.ModelBackend",
-    'account.aauthentication.EmailAuthentication',
+    'account.authentication.EmailAuthentication',
     
                           ]
 
