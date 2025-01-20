@@ -2,4 +2,9 @@
 
 {% block contact %}
     <p>Index home</p>
+        <div class="card">
+            {% for post in Posts %}
+                <a href="{% url 'post:post_detail' post.id  post.slug %}" class="card-body">{{ post.caption|truncatewords:5}}</a>
+            {% endfor %}
+        </div>
 {% endblock %}

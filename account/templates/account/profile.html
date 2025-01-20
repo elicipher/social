@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block user-login %}
-<h3 class="center">{{ user.username }}</h3>
+    <h3 class="center">{{ user.username }}</h3>
+    <div class="card">
+        {% for post in posts %}
+            <a href="{% url 'post:post_detail' post.id  post.slug %}" class="card-body">{{ post.caption|truncatewords:5}}</a>
+        {% endfor %}
+    </div>
 {% endblock %}

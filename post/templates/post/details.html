@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block detail-post %}
+    
+    <p>{{post.caption}}</p>
+    <p>by {{post.user.username}} - {{post.updated|date:"Y-M-d"}}</p>
+{% endblock %}
