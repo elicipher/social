@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
 {% block detail-post %}
-    
+
+    <p><a href="{% url 'account:user_profile' post.user.id %}"> {{post.user.username}} </a>-  {{post.updated|date:"Y-M-d"}}</p>
     <p>{{post.caption}}</p>
-    <p>by {{post.user.username}} - {{post.updated|date:"Y-M-d"}}</p>
+    {% if request.user.id == post.user.id %}
+    <a href="{% url 'post:post_delete' post.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'post:post_update' post.id %}" class="btn btn-info">Update</a>
+    <a href="{% url 'post:post_create' %}" class="btn btn-success">Create</a>
+    {% endif %}
+
 {% endblock %}
