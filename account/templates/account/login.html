@@ -9,4 +9,7 @@
     </form>
     <br>
     <p>Are you new ?<a href="{% url 'account:user_register'%}">Sing in</a></p>
+    {% if incorrect_password %}
+    <p>forgot your password ?<a href="{% url 'account:reset_password'%}">Reset password</a></p>
+    {% endif %}
 {% endblock %}

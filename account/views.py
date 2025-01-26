@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from post.models import Post
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
 # Create your views here.
 class RegisterView(View):
 
@@ -54,8 +56,10 @@ class LoginView(View):
                 login(request , user)
                 messages.success(request , "You reqistered successfully " , "success")
                 return redirect('home:home')
+                
+            incorrect_password = True
             messages.error(request , "Your password or username is wrong !", 'danger' )
-            return render(request ,self.template_name , {"form":form})
+            return render(request ,self.template_name , {"form":form , 'incorrect_password' : incorrect_password})
 
 class LogoutView(LoginRequiredMixin ,View):
 
@@ -70,4 +74,18 @@ class ProfileView(LoginRequiredMixin ,View):
         user = get_object_or_404(User ,pk = id_user)
         posts = Post.objects.filter(user=user)
         return render(request , 'account/profile.html' , {'user':user , 'posts': posts})
-         
+    
+class PasswordResetView(auth_views.PasswordResetView):
+    template_name = 'account/reset_password_form.html'
+    success_url = reverse_lazy('account:password_reset_done')
+    email_template_name = 'account/password_reset_email.html'
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'account/password_reset_done.html'
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'account/password_reset_confirm.html'
+    success_url = reverse_lazy('account:password_reset_compelet')
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'account/password_reset_compelet.html'
