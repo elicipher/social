@@ -4,12 +4,15 @@ from django.urls import reverse
 
 # Create your models here.
 class Post(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name='posts')
     slug = models.SlugField(max_length=20)  
     caption = models.TextField() 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+        
     def __str__(self):
         return self.slug
     
