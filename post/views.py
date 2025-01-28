@@ -1,18 +1,37 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.views import View
-from .models import Post
+from .models import Post , Comment
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import PostCreateUpdateForms
+from .forms import PostCreateUpdateForms , CommentCreateForm , CommentReplyForm 
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+
 
 # Create your views here.
 class PostDetailView(View):
+    def setup(self, request, *args, **kwargs):
+        self.post_instance = get_object_or_404(Post , pk=kwargs['post_id'] , slug =kwargs['post_slug'])
+        return super().setup(request, *args, **kwargs)
     
-    def get(self , request , post_id , post_slug):
-        post = get_object_or_404(Post , pk = post_id , slug = post_slug)
-        return render(request , 'post/details.html' , {"post" : post})
-
+    form_class_reply = CommentReplyForm
+    form_class = CommentCreateForm
+    def get(self , request , *args , **kwargs):
+        Comments = self.post_instance.pcomments.filter(is_reply = False)
+        return render(request , 'post/details.html' , {"post" : self.post_instance , 'form':self.form_class , 'Comments':Comments , 'form_reply':self.form_class_reply} )
+    
+    @method_decorator(login_required)
+    def post(self , request , *args , **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            New_comment = form.save(commit=False)
+            New_comment.user = request.user
+            New_comment.post = self.post_instance
+            New_comment.save()
+            messages.success(request , "your comment submited successfuly !",'success')
+            return redirect('post:post_detail',self.post_instance.id , self.post_instance.slug)
 
 class PostDeleteView(LoginRequiredMixin,View):
 
@@ -70,3 +89,23 @@ class PostCreateView(LoginRequiredMixin,View):
             new_post.save()
             messages.success(request ,'created post successfully' , 'success')
             return redirect('account:user_profile' , request.user.id)
+
+class ReplyCommentView(View):
+    form_class = CommentReplyForm
+    def post(self , request , post_id , comment_id):
+           post = get_object_or_404(Post , id = post_id)
+           comment = get_object_or_404(Comment , id = comment_id)
+           form = self.form_class(request.POST)
+           if form.is_valid():
+            New_reply = form.save(commit=False)
+            New_reply.user = request.user
+            New_reply.post = post
+            New_reply.reply = comment
+            New_reply.is_reply = True
+            New_reply.save()
+            messages.success(request , "Reply sended successfuly " , "success")
+            return redirect("post:post_detail" , post.id , post.slug)
+
+
+
+    

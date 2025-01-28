@@ -3,11 +3,50 @@
 {% block detail-post %}
 
     <p><a href="{% url 'account:user_profile' post.user.id %}"> {{post.user.username}} </a>-  {{post.updated|date:"Y-M-d"}}</p>
-    <p>{{post.caption}}</p>
+    <p>{{post.caption}}</p><hr>
+
+    {% if request.user.is_authenticated %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Send">
+        </form>
+
+    {% else %}
+        <p class="alert alert-danger ">Only logged user can comment </p>
+    {% endif %}
+    {% for comm in Comments %}
+        <div class="card">
+            <p class="card-header">{{comm.user}} | {{comm.created|timesince}}</p>
+            <p class="card-body">{{comm.body}}</p>
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'post:comment_reply' post.id comm.id %}" method="post">
+                    {% csrf_token %}
+                    {{form_reply.as_p}}
+                    <input type="submit" value ="Send">
+                <form/>
+            {% endif %}
+
+            {% with replies=comm.rcomments.all %}
+            {% for reply in replies %}
+                <p class="bg-primery p-3 m-2">Reply : {{reply.user}} | {{reply.created|timesince}}</p>
+                <p class="card-body">{{reply.body}}</p>
+            {% endfor %}
+            {% endwith %}
+
+
+        </div><br>
+        {% empty %}
+            <p>Not comment yet</p>
+    
+    {% endfor %}
+        <hr>
     {% if request.user.id == post.user.id %}
     <a href="{% url 'post:post_delete' post.id %}" class="btn btn-danger">Delete</a>
     <a href="{% url 'post:post_update' post.id %}" class="btn btn-info">Update</a>
     <a href="{% url 'post:post_create' %}" class="btn btn-success">Create</a>
     {% endif %}
+
 
 {% endblock %}

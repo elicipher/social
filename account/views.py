@@ -36,6 +36,10 @@ class RegisterView(View):
     
 class LoginView(View):
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next')
+        return super().setup(request, *args, **kwargs)
+
     def dispatch(self, request, *args, **kwargs):
         if  request.user.is_authenticated :
             return redirect('home:home')
@@ -56,6 +60,8 @@ class LoginView(View):
             if user is not None :
                 login(request , user)
                 messages.success(request , "You reqistered successfully " , "success")
+                if self.next :
+                    return redirect(self.next)
                 return redirect('home:home')
                 
             incorrect_password = True
