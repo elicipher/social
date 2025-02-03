@@ -1,7 +1,10 @@
 {% extends 'base.html'%}
 
 {% block content %}
-    <p>Index home</p>
+    <form method="get">
+        {{Search.as_p}} 
+        <input value="Search" type="submit">
+    </form>
         <div class="card">
             {% for post in Posts %}
                 <a href="{{ post.get_absolute_url }}" class="card-body">{{ post.caption|truncatewords:5}}</a>
