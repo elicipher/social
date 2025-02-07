@@ -1,5 +1,5 @@
 from django.urls import path
-from . views import RegisterView , LoginView , LogoutView , ProfileView , PasswordResetView,PasswordResetDoneView,PasswordResetConfirmView,PasswordResetCompleteView,FollowUserView,UnFollowUserView
+from . views import RegisterView , LoginView , LogoutView , ProfileView , PasswordResetView,PasswordResetDoneView,PasswordResetConfirmView,PasswordResetCompleteView,FollowUserView,UnFollowUserView,EditUserView
 app_name = 'account'
 urlpatterns =[
     
@@ -12,5 +12,5 @@ urlpatterns =[
     path("confirm/<uidb64>/<token>" , PasswordResetConfirmView.as_view() , name= "password_reset_confirm" ),
     path("compelet/" , PasswordResetCompleteView.as_view() , name= "password_reset_compelet" ),
     path('follow/<int:id_user>',FollowUserView.as_view(), name='user_follow'),
-    path('unfollow/<int:id_user>',UnFollowUserView.as_view(), name='user_unfollow'),
+    path('edit_user/',EditUserView.as_view(), name='edit_user'),
 ]
