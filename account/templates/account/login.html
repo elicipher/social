@@ -1,15 +1,30 @@
-{% extends "base.html" %}
-
-{% block user-login %}
-    <h4>Login</h4>
-    <form action="" method="post" class= "col-md-3" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
-    </form>
-    <br>
-    <p>Are you new ?<a href="{% url 'account:user_register'%}">Sing in</a></p>
-    {% if incorrect_password %}
-    <p>forgot your password ?<a href="{% url 'account:reset_password'%}">Reset password</a></p>
-    {% endif %}
+{% extends 'base_auth.html' %}
+{% block auth %}
+<div class="signup-form-wrapper">
+    <div class="info-box text-center mb-4">
+        <p>{% include 'include/Massages.html' %}</p>
+        
+    </div>
+    <h1 class="create-acc text-center">Login</h1>
+    <div class="signup-inner text-center">
+        <h3 class="title">Wellcome to Adda</h3>
+        <form method="post" class="signup-inner--form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12">
+                    {{form.username}}
+                </div>
+              
+                <div class="col-12">
+                    {{form.password}}
+                </div>
+               
+                <div class="col-12">
+                    <button class="submit-btn">Login</button>
+                </div>
+            </div>
+            <h6 class="terms-condition">Don't have an accout? <a href="{% url 'account:user_register' %}">Sighup</a></h6>
+            {% if incorrect_password %}
+            <h6 class="terms-condition">Forget the password? <a href="{% url 'account:reset_password' %}">ResetPassword</a></h6>
+            {% endif %}
 {% endblock %}

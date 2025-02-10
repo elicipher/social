@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "social.context_processors.static_path",
             ],
         },
     },
@@ -142,3 +143,10 @@ EMAIL_HOST_PASSWORD = 'bjafmdfxgoowymho'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Eli Cipher website'
 
+
+import os
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [  
+    os.path.join(BASE_DIR, 'static')  
+]

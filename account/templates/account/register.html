@@ -1,13 +1,37 @@
-{% extends "base.html" %}
-
-{% block user-register %}
-    <h4>Register</h4>
-    <form action="" method="post" class= "col-md-3" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register">
-    </form>
-    <br>
-    <p>Do you have account ? <a href="{% url 'account:user_login'%}">login</a></p>
-    
+{% extends 'base_auth.html' %}
+{% block auth %}
+<div class="signup-form-wrapper">
+    <div class="info-box text-center mb-4">
+        <p>{% include 'include/Massages.html' %}</p>
+        
+    </div>
+    <h1 class="create-acc text-center">Create Account</h1>
+    <div class="signup-inner text-center">
+        <h3 class="title">Wellcome to Adda</h3>
+        <form method="post" class="signup-inner--form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12">
+                    {{form.username}}
+                    <small class="text-danger">{{ form.username.errors }}</small>
+                </div>
+                <div class="col-12">
+                    {{form.email}}
+                    <small class="text-danger">{{ form.email.errors }}</small>
+                </div>
+                <div class="col-12">
+                    {{form.password}}
+                    <small class="text-danger">{{ form.password.errors }}</small>
+                </div>
+                <div class="col-12">
+                    {{form.confirm_password}}
+                    <small class="text-danger">{{ form.confirm_password.errors }}</small>
+                </div>
+               
+                <div class="col-12">
+                    <button class="submit-btn">Sigh up</button>
+                </div>
+            </div>
+            <h6 class="terms-condition">Already have an account ?<a href="{% url 'account:user_login' %}">Login</a></h6>
 {% endblock %}
+           
