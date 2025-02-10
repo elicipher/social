@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vybxmv^%cy5k5@vv4c%phln7)+-b$@c+!@%x07-g)h7hfs^9bv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -150,3 +150,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [  
     os.path.join(BASE_DIR, 'static')  
 ]
+import sys
+import os
+
+# مسیر پروژه
+path = "/home/EliCipher/Social"
+if path not in sys.path:
+    sys.path.append(path)
+
+# تنظیمات جنگو
+os.environ["DJANGO_SETTINGS_MODULE"] = "social.settings"
+
+# اجرای برنامه
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+STATIC_ROOT = "/home/EliCipher/Social/static"
