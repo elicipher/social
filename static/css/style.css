@@ -3495,9 +3495,32 @@ textarea:focus {
 }
 
 .mob-btn {
-  width: 50px;
+  width: 500px;
 }
-
+.button {
+  background-color: #dc4734;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.buttondel {
+  background-color: #ff1e00;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
 /*------- mobile footer area end -------*/
 

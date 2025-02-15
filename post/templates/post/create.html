@@ -1,12 +1,128 @@
 {% extends 'base.html' %}
+{% block create %}
 
-{% block content %}
-    <form method="post" novalidate>
-        
-        {% csrf_token %}
-        {{ form.as_p}}
-        <input type="submit" value="create">
 
-    </form>
+        <div class="main-wrapper pt-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 order-2 order-lg-1">
+                        
+                    </div>
+
+                    <div class="col-lg-6 order-1 order-lg-2">
+                        <!-- share box start -->
+                        {% include 'include/Massages.html' %}
+                        <div> 
+                            
+                            <div class="share-box-inner">
+                           
+
+                                <!-- Modal start -->
+                                <div class="modal fade" id="textbox" aria-labelledby="textbox">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Share Your Mood</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body custom-scroll">
+                                                <textarea name="share" class="share-field-big custom-scroll" placeholder="Say Something"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="post-share-btn" data-dismiss="modal">cancel</button>
+                                                <button type="button" class="post-share-btn">post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal end -->
+                            </div>
+                        </div>
+                        <!-- share box end -->
+                    
+                        <!-- post status start -->
+                        <div class="card">
+                            <!-- post title start -->
+                            <div class="post-title d-flex align-items-center">
+                                <!-- profile picture end -->
+                                <div class="profile-thumb">
+                                    
+                                </div>
+                                <!-- profile picture end -->
+
+                               
+
+                            </div>
+                            
+                            <div class="post-content">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                <h6>Caption:</h6>
+                                <br>
+                                <p class="post-desc">
+                                    {{form.caption}}
+                                </p>
+                                    <label for="image-upload">
+                                        <img id="preview" src="/static/images/post/Add_image.png" alt="Upload Image" style="width: 510px; height: 270px; cursor: pointer; border-radius: 10px;">
+                                    </label>
+                                    
+                                    <input id="image-upload" type="file" name="{{form.photo.name}}" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                                    
+                                    <!-- دکمه حذف تصویر -->
+                                    <button class="buttondel" type="button" id="delete-image-btn" style="display:none;" onclick="deleteImage()">Delete photo</button>
+                                  
+                                    <input type="submit" value="Send" class="button">
+                                </form>
+                                
+                                <script>
+                                    // پیش‌نمایش تصویر آپلود شده
+                                    function previewImage(event) {
+                                        var preview = document.getElementById('preview');
+                                        var file = event.target.files[0];
+                                        var reader = new FileReader();
+                                
+                                        reader.onload = function() {
+                                            preview.src = reader.result;
+                                            document.getElementById('delete-image-btn').style.display = 'inline-block'; // نمایش دکمه حذف
+                                        };
+                                
+                                        if (file) {
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
+                                
+                                    // حذف تصویر
+                                    function deleteImage() {
+                                        document.getElementById('image-upload').value = '';  // حذف فایل
+                                        document.getElementById('preview').src = '/static/images/post/post-large-1.jpg';  // بازگرداندن تصویر پیش‌فرض
+                                        document.getElementById('delete-image-btn').style.display = 'none';  // مخفی کردن دکمه حذف
+                                    }
+                                </script>
+                                
+                                
+                                
+                                </div>
+                                
+                
+                                </div>
+                            </div>
+                        </div>
+                        <!-- post status end -->
+                    </div>
+
+                    <div class="col-lg-3 order-3">
+                        <aside class="widget-area">
+                            <!-- widget single item start -->
+                           
+
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
 {% endblock %}

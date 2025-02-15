@@ -13,6 +13,8 @@ class Relation(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE)
+    img_user = models.ImageField(upload_to='profiles/',null=True , blank=True)
+    banner = models.ImageField(upload_to='banner/',null=True , blank=True)
     age = models.PositiveBigIntegerField(default=0)
     bio = models.TextField(null = True ,blank =True)
 

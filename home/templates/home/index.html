@@ -233,7 +233,11 @@
                                 <div class="profile-thumb">
                                     <a href="#">
                                         <figure class="profile-thumb-middle">
+                                            {% if user.profile.img_user.url != None %}
+                                            <img src="{{post.user.profile.img_user.url}}" alt="profile picture">
+                                            {% else %}
                                             <img src="{{ STATIC_PATH }}images/profile/profile-small-1.jpg" alt="profile picture">
+                                            {% endif %}
                                         </figure>
                                     </a>
                                 </div>
@@ -262,14 +266,16 @@
                                 <p class="post-desc">
                                     {{post.caption|linebreaks}}
                                 </p>
-    
+                                
+                                {% if post.photo %}
                                 <div class="post-thumb-gallery">
                                     <figure class="post-thumb img-popup">
-                                        <a href="{{ STATIC_PATH }}images/post/post-large-1.jpg">
-                                            <img src="{{ STATIC_PATH }}images/post/post-1.jpg" alt="post image">
+                                        <a href="{{post.photo.url}}">
+                                            <img src="{{post.photo.url}}" alt="post image">
                                         </a>
                                     </figure>
                                 </div>
+                                {% endif %}
                                 <div class="post-meta">
                                     <button class="post-meta-like">
                                         <i class="bi bi-heart-beat"></i>

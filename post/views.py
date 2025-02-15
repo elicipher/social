@@ -85,7 +85,7 @@ class PostCreateView(LoginRequiredMixin,View):
         return render(request , 'post/create.html' , {'form' : form})
 
     def post(self ,request , *args , **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST , request.FILES)
         if form.is_valid():
             new_post =form.save(commit=False)
             new_post.slug = slugify(form.cleaned_data['caption'][:20])
@@ -123,4 +123,6 @@ class LikePostView(LoginRequiredMixin , View):
 
         return redirect('post:post_detail' , post.id , post.slug)
 
+
+    
     

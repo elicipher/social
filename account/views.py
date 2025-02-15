@@ -30,7 +30,7 @@ class RegisterView(View):
         if form.is_valid():
             cd = form.cleaned_data
             User.objects.create_user(cd["username"] , cd["email"], cd["password"])
-            messages.success(request , "You login successfully " , "success")
+            messages.success(request , "You registered successfully " , "success")
             return redirect('home:home')
         return render(request ,self.template_name , {"form" : form})
     
@@ -131,15 +131,21 @@ class UnFollowUserView(LoginRequiredMixin , View):
 
 class EditUserView(LoginRequiredMixin,View):
     form_class = EditUserForm
+    have_profile = False
     def get(self , request):
-        form = self.form_class(instance=request.user.profile , initial={'email':request.user.email})
-        return render(request , "account/edit_profile.html" , {"form":form})
+        form = self.form_class(instance=request.user.profile , initial={'email':request.user.email , 'username':request.user.username , 'img_user':request.user.profile.img_user})
+        if request.user.profile.img_user != None :
+            have_profile = True
+
+        return render(request , "account/edit_profile.html" , {"form":form , 'have_profile' : have_profile})
 
     def post(self , request):
-        form = self.form_class(request.POST , instance=request.user.profile)
+        form = self.form_class(request.POST , request.FILES ,instance=request.user.profile )
         if form.is_valid():
             form.save()
+            request.user.username = form.cleaned_data['username']
             request.user.email = form.cleaned_data['email']
             request.user.save()
             messages.success(request , "Profile changed successfuly " , 'success')
         return redirect("account:user_profile" , request.user.id)
+

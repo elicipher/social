@@ -9,10 +9,12 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_PATH }}images/favicon.ico">
-
+    
     <!-- CSS
+     
 	============================================ -->
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet">
@@ -34,8 +36,9 @@
     <link rel="stylesheet" href="{{ STATIC_PATH }}css/plugins/lightgallery.min.css">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ STATIC_PATH }}css/style.css">
+    
 
-</head>
+</head
 
 <body>
 
@@ -49,8 +52,7 @@
                             <nav>
                                 <ul>
                                     <li class="active"><a href="{% url 'home:home' %}">Home</a></li>
-                                    <li><a href="#">Create post</a></li>
-                                    <li><a href="#">Notifications</a></li>
+                                    <li><a href="{% url 'post:post_create' %}">Create post</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -93,7 +95,7 @@
                                         {% if request.user.is_authenticated %}
                                         <div class="profile-body">
                                             <ul>
-                                                <li><a href="profile.html"><i class="flaticon-user"></i>Profile</a></li>
+                                                <li><a href="{% url 'account:user_profile' user.id %}"><i class="flaticon-user"></i>Profile</a></li>
                                                 <li><a href="{% url 'account:user_logout' %}"><i class="flaticon-unlock"></i>Logout</a></li>
                                             </ul>
                                         </div>
@@ -120,128 +122,17 @@
                 <div class="mobile-menu w-100">
                     <ul>
                         <li>
-                            <button class="notification request-trigger"><i class="flaticon-users"></i>
-                                <span>03</span>
-                            </button>
-                            <ul class="frnd-request-list">
-                                <li>
-                                    <div class="frnd-request-member">
-                                        <figure class="request-thumb">
-                                            <a href="profile.html">
-                                                <img src="{{ STATIC_PATH }}images/profile/profile-midle-1.jpg" alt="proflie author">
-                                            </a>
-                                        </figure>
-                                        <div class="frnd-content">
-                                            <h6 class="author"><a href="profile.html">merry watson</a></h6>
-                                            <p class="author-subtitle">Works at HasTech</p>
-                                            <div class="request-btn-inner">
-                                                <button class="frnd-btn">confirm</button>
-                                                <button class="frnd-btn delete">delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="frnd-request-member">
-                                        <figure class="request-thumb">
-                                            <a href="profile.html">
-                                                <img src="{{ STATIC_PATH }}images/profile/profile-midle-2.jpg" alt="proflie author">
-                                            </a>
-                                        </figure>
-                                        <div class="frnd-content">
-                                            <h6 class="author"><a href="profile.html">merry watson</a></h6>
-                                            <p class="author-subtitle">Works at HasTech</p>
-                                            <div class="request-btn-inner">
-                                                <button class="frnd-btn">confirm</button>
-                                                <button class="frnd-btn delete">delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="frnd-request-member">
-                                        <figure class="request-thumb">
-                                            <a href="profile.html">
-                                                <img src="{{ STATIC_PATH }}images/profile/profile-midle-3.jpg" alt="proflie author">
-                                            </a>
-                                        </figure>
-                                        <div class="frnd-content">
-                                            <h6 class="author"><a href="profile.html">merry watson</a></h6>
-                                            <p class="author-subtitle">Works at HasTech</p>
-                                            <div class="request-btn-inner">
-                                                <button class="frnd-btn">confirm</button>
-                                                <button class="frnd-btn delete">delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <a href="{% url 'home:home' %}">
+                                <img src="{{ STATIC_PATH }}images/icons/home-icon.svg" alt="Home">
+                            </a>
                         </li>
                         <li>
-                            <button class="notification"><i class="flaticon-notification"></i>
-                                <span>03</span>
-                            </button>
+                            <a href="{% url 'post:post_create' %}" >
+                                <img src="{{ STATIC_PATH }}images/icons/create-icon.svg" alt="Create">
+                            </a>
+                            
                         </li>
-                        <li>
-                            <button class="chat-trigger notification"><i class="flaticon-chats"></i>
-                                <span>04</span>
-                            </button>
-                            <div class="mobile-chat-box">
-                                <div class="live-chat-title">
-                                    <!-- profile picture end -->
-                                    <div class="profile-thumb">
-                                        <a href="profile.html">
-                                            <figure class="profile-thumb-small profile-active">
-                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-15.jpg" alt="profile picture">
-                                            </figure>
-                                        </a>
-                                    </div>
-                                    <!-- profile picture end -->
-                                    <div class="posted-author">
-                                        <h6 class="author"><a href="profile.html">Robart Marloyan</a></h6>
-                                        <span class="active-pro">active now</span>
-                                    </div>
-                                    <div class="live-chat-settings ml-auto">
-                                        <button class="chat-settings"><img src="{{ STATIC_PATH }}images/icons/settings.png" alt=""></button>
-                                        <button class="close-btn"><img src="{{ STATIC_PATH }}images/icons/close.png" alt=""></button>
-                                    </div>
-                                </div>
-                                <div class="message-list-inner">
-                                    <ul class="message-list custom-scroll">
-                                        <li class="text-friends">
-                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p>
-                                            <div class="message-time">10 minute ago</div>
-                                        </li>
-                                        <li class="text-author">
-                                            <p>Many desktop publishing packages and web page editors</p>
-                                            <div class="message-time">5 minute ago</div>
-                                        </li>
-                                        <li class="text-friends">
-                                            <p>packages and web page editors </p>
-                                            <div class="message-time">2 minute ago</div>
-                                        </li>
-                                        <li class="text-friends">
-                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p>
-                                            <div class="message-time">10 minute ago</div>
-                                        </li>
-                                        <li class="text-author">
-                                            <p>Many desktop publishing packages and web page editors</p>
-                                            <div class="message-time">5 minute ago</div>
-                                        </li>
-                                        <li class="text-friends">
-                                            <p>packages and web page editors </p>
-                                            <div class="message-time">2 minute ago</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="chat-text-field mob-text-box">
-                                    <textarea class="live-chat-field custom-scroll" placeholder="Text Message"></textarea>
-                                    <button class="chat-message-send" type="submit" value="submit">
-                                        <img src="{{ STATIC_PATH }}images/icons/plane.png" alt="">
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
+                
                         <li>
                             <button class="search-trigger">
                                 <i class="search-icon flaticon-search"></i>
@@ -274,15 +165,16 @@
                                 <a class="mail" href="#">Sign</a>
                                 {% endif %}
                             </div>
+                            {% if request.user.is_authenticated %}
                             <div class="profile-body">
                                 <ul>
-                                    <li><a href="profile.html"><i class="flaticon-user"></i>Profile</a></li>
-                                    <li><a href="#"><i class="flaticon-message"></i>Inbox</a></li>
-                                    <li><a href="#"><i class="flaticon-document"></i>Activity</a></li>
+                                    <li><a href="{% url 'account:user_profile' user.id %}"><i class="flaticon-user"></i>Profile</a></li>
+                                    <li><a href="{% url 'account:user_logout' %}"><i class="flaticon-unlock"></i>Logout</a></li>
                                 </ul>
+                            </div>
+                            {% endif %}
                                 <ul>
-                                    <li><a href="#"><i class="flaticon-settings"></i>Setting</a></li>
-                                    <li><a href="signup.html"><i class="flaticon-unlock"></i>Sing out</a></li>
+                              
                                 </ul>
                             </div>
                         </div>
@@ -297,6 +189,10 @@
 
         {% block content %}
         {% endblock %}
+
+        {% block create %}
+        {% endblock %}
+        
         
 
 

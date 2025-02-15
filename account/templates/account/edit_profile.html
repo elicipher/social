@@ -1,11 +1,438 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<div class="main-wrapper">
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="profile-banner-large bg-img" data-bg="{{ STATIC_PATH }}images/banner/profile-banner.jpg">
+    </div>
+    <div class="profile-menu-area bg-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-3">
+                    <div class="profile-picture-box">
+                        <figure class="profile-picture">
+                            <label for="image-upload">
+                                {% if user.profile.img_user.url != None %}
+                                <img id="preview" src="{{user.profile.img_user.url}}" alt="Upload Image" style="width: 270px; height: 270px; cursor: pointer; border-radius: 10px;">
+                                {% else %}
+                                <img id="preview" src="{{ STATIC_PATH }}images/profile/profile-1.jpg" alt="Upload Image" style="width: 270px; height: 270px; cursor: pointer; border-radius: 10px;">
+                                {% endif %}
+                            </label>
+                            
+                            <input id="image-upload" type="file" name="{{form.img_user.name}}" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                            
+                            <!-- دکمه حذف تصویر -->
+                             
+                            <button class="buttondel" type="button" id="delete-image-btn" style="display:none;" onclick="deleteImage()">Delete photo</button>
+                          
+                           
+                        </figure>
+                        
+                        <script>
+                            // پیش‌نمایش تصویر آپلود شده
+                            function previewImage(event) {
+                                var preview = document.getElementById('preview');
+                                var file = event.target.files[0];
+                                var reader = new FileReader();
+                        
+                                reader.onload = function() {
+                                    preview.src = reader.result;
+                                    document.getElementById('delete-image-btn').style.display = 'inline-block'; // نمایش دکمه حذف
+                                };
+                        
+                                if (file) {
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                        
+                            // حذف تصویر
+                            function deleteImage() {
+                                document.getElementById('image-upload').value = '';  // حذف فایل
+                                document.getElementById('preview').src = '/static/images/post/post-large-1.jpg';  // بازگرداندن تصویر پیش‌فرض
+                                document.getElementById('delete-image-btn').style.display = 'none';  // مخفی کردن دکمه حذف
+                            }
+                        </script>
+                        
+                </div>
+                <div class="col-lg-6 col-md-6 offset-lg-1">
+                    <div class="profile-menu-wrapper">
+                        <div class="main-menu-inner header-top-navigation">
+                            <nav>
+                                <br>
+                                <br>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 d-none d-md-block">
+                    <div class="profile-edit-panel">
+                       
+                        <button class="edit-btn">edit profile</button>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-2 order-lg-1">
+                <aside class="widget-area profile-sidebar">
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">{{user.username}}</h4>
+                        <div class="widget-body">
+                            <div class="about-author">
+                                <p>I Don’t know how? But i believe that it is possible one day if i stay with my dream all time</p>
+                                <ul class="author-into-list">
+                                    <li><a href="#"><i class="bi bi-office-bag"></i>Graphic Designer</a></li>
+                                    <li><a href="#"><i class="bi bi-home"></i>Melbourne, Australia</a></li>
+                                    <li><a href="#"><i class="bi bi-location-pointer"></i>Pulshar, Melbourne</a></li>
+                                    <li><a href="#"><i class="bi bi-heart-beat"></i>Travel, Swimming</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- widget single item end -->
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="save">
-    </form>
 
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">page you may like</h4>
+                        <div class="widget-body">
+                            <ul class="like-page-list-wrapper">
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-33.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Travel The World</a></h3>
+                                        <p class="list-subtitle"><a href="#">adventure</a></p>
+                                    </div>
+                                    <button class="like-button active">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-30.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Foodcort Nirala</a></h3>
+                                        <p class="list-subtitle"><a href="#">food</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-5.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Rolin Theitar</a></h3>
+                                        <p class="list-subtitle"><a href="#">drama</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-29.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Active Mind</a></h3>
+                                        <p class="list-subtitle"><a href="#">fitness</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- widget single item end -->
+                </aside>
+            </div>
+
+            <div class="col-lg-6 order-1 order-lg-2">
+                <div class="card">
+                <form method="post">
+                    <div class="mb-3 ">
+                        <label class="form-label">Username :</label>
+                        {{form.username}}
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">Email :</label>
+                        {{form.email}}
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">Age:</label>
+                        {{form.age}}
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">Bio:</label>
+                        {{form.bio}}
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">Banner :</label>
+                        {{form.banner}}
+                    </div>
+                     <input type="submit" value="Save" class="button">
+            
+
+
+
+                </form>
+                
+             
+
+                       
+
+                 
+                   
+                                        
+                    
+                                   
+                           
+                         
+                   
+              
+            
+             
+            </div>
+            </div>
+
+            <div class="col-lg-3 order-3">
+                <aside class="widget-area">
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">Recent Notifications</h4>
+                        <div class="widget-body">
+                            <ul class="like-page-list-wrapper">
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-9.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Any one can join with us if you want</a></h3>
+                                        <p class="list-subtitle">5 min ago</p>
+                                    </div>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-35.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Any one can join with us if you want</a></h3>
+                                        <p class="list-subtitle">10 min ago</p>
+                                    </div>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-15.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Any one can join with us if you want</a></h3>
+                                        <p class="list-subtitle">18 min ago</p>
+                                    </div>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-6.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Any one can join with us if you want</a></h3>
+                                        <p class="list-subtitle">25 min ago</p>
+                                    </div>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-34.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Any one can join with us if you want</a></h3>
+                                        <p class="list-subtitle">39 min ago</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- widget single item end -->
+
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">Advertizement</h4>
+                        <div class="widget-body">
+                            <div class="add-thumb">
+                                <a href="#">
+                                    <img src="{{ STATIC_PATH }}images/banner/advertise.jpg" alt="advertisement">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- widget single item end -->
+
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">Friends Zone</h4>
+                        <div class="widget-body">
+                            <ul class="like-page-list-wrapper">
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-10.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">arfim bolt</a></h3>
+                                        <p class="list-subtitle"><a href="#">10 mutual</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-2.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">marry wither</a></h3>
+                                        <p class="list-subtitle"><a href="#">02 mutual</a></p>
+                                    </div>
+                                    <button class="like-button active">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-5.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Rolin Theitar</a></h3>
+                                        <p class="list-subtitle"><a href="#">drama</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                                <li class="unorder-list">
+                                    <!-- profile picture end -->
+                                    <div class="profile-thumb">
+                                        <a href="#">
+                                            <figure class="profile-thumb-small">
+                                                <img src="{{ STATIC_PATH }}images/profile/profile-small-14.jpg" alt="profile picture">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- profile picture end -->
+
+                                    <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="#">Active Mind</a></h3>
+                                        <p class="list-subtitle"><a href="#">fitness</a></p>
+                                    </div>
+                                    <button class="like-button">
+                                        <img class="heart" src="{{ STATIC_PATH }}images/icons/heart.png" alt="">
+                                        <img class="heart-color" src="{{ STATIC_PATH }}images/icons/heart-color.png" alt="">
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- widget single item end -->
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

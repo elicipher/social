@@ -3,7 +3,6 @@
 <div class="signup-form-wrapper">
     <div class="info-box text-center mb-4">
         <p>{% include 'include/Massages.html' %}</p>
-        
     </div>
     <h1 class="create-acc text-center">Create Account</h1>
     <div class="signup-inner text-center">
@@ -21,11 +20,12 @@
                 </div>
                 <div class="col-12">
                     {{form.password}}
-                    <small class="text-danger">{{ form.password.errors }}</small>
+                    <small class="text-danger">{{ form.password.errors  }}</small>
                 </div>
                 <div class="col-12">
-                    {{form.confirm_password}}
-                    <small class="text-danger">{{ form.confirm_password.errors }}</small>
+                    {{form.confirmpassword}}
+                    <small class="text-danger">{{ form.confirmpassword.errors }}</small>
+                    
                 </div>
                
                 <div class="col-12">

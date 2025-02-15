@@ -4,7 +4,14 @@ from .models import Post ,Comment
 class PostCreateUpdateForms(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('caption',)
+        fields = ('caption','photo',)
+        
+        widgets ={
+            'caption' : forms.Textarea(attrs={'class':'form-control',"placeholder": "Say somethig ... "}),
+            'photo' : forms.ClearableFileInput()
+
+        }
+    
 
 class CommentCreateForm(forms.ModelForm):
     class Meta:

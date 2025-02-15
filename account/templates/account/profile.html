@@ -9,9 +9,15 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="profile-picture-box">
                         <figure class="profile-picture">
+                        {% if user.profile.img_user %}
                             <a href="profile.html">
-                                <img src="{{ STATIC_PATH }}images/profile/profile-1.jpg" alt="profile picture">
+                                <img src="{{user.profile.img_user.url}}" alt="profile picture">
                             </a>
+                        {% else %}
+                        <a href="profile.html">
+                            <img src="{{ STATIC_PATH }}images/profile/profile-1.jpg" alt="profile picture">
+                        </a>
+                        {% endif %}
                         </figure>
                     </div>
                 </div>
@@ -34,7 +40,8 @@
                 <div class="col-lg-2 col-md-3 d-none d-md-block">
                     <div class="profile-edit-panel">
                         {% if request.user.id == user.id %}
-                        <button class="edit-btn">edit profile</button>
+                        <button class="edit-btn" onclick="window.location.href='{% url 'account:edit_user' %}';">Edit Profile</button>
+
                         {% endif %}
                     </div>
                 </div>
